@@ -1,0 +1,190 @@
+﻿{% extends "base.html" %} Make Config {% block title %}Home{% endblock %}
+<!--	<style>-->
+<!--		html {-->
+<!--			padding: 20px;-->
+<!--		}-->
+<!--		-->
+<!--		.btn-sml {-->
+<!--			padding: 10px 10px;-->
+<!--			font-size: 8px;-->
+<!--			border-radius: 8px;-->
+<!--		}-->
+<!--	</style>-->
+
+{% block content %}
+<br>
+<h2 align="center">Script Configuration Page</h2>
+<br>
+
+<div class="row align-items-start">
+	<div class="col">
+
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="trunk_name" class="col-sm-4 control-label">Trunk Name</label>
+				<div class="col-sm-7">
+					<input type="trunk_name" class="form-control" id="trunk_name" value="{{conn_name.split('.', 1)[0].upper()}}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="group_name" class="col-sm-7 control-label">Group name</label>
+				<div class="col-sm-7">
+					<input type="group_name" class="form-control" id="group_name" value="{{conn_name.split('.', 1)[0].lower()}}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="client_ip" class="col-sm-7 control-label">Client IP</label>
+				<div class="col-sm-7">
+					<input type="client_ip" class="form-control" id="client_ip" value="{{work_sheet['H16'].value}}">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="client_port" class="col-sm-7 control-label">Client port</label>
+				<div class="col-sm-7">
+					<input type="client_port" class="form-control" id="client_port" value="5060">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-5 col-sm-7">
+					<div class="checkbox">
+						<label><input type="checkbox" name="no_iproute" id="no_iproute">Do not create ip route</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-5 col-sm-7">
+					<div class="checkbox">
+						<label><input type="checkbox" name="redundancy" id="redundancy">Add redundant peer</label>
+					</div>
+				</div>
+			</div>
+
+			<div style="display: none;" id="redundant_div">
+				<div class="form-group">
+					<label for="redundant_ip" class="col-sm-7 control-label">Redundant IP</label>
+					<div class="col-sm-7">
+						<input type="redundant_ip" class="form-control" id="redundant_ip">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="redundant_port" class="col-sm-7 control-label">Redundant port</label>
+					<div class="col-sm-7">
+						<input type="redundant_port" class="form-control" id="redundant_port" value="5060">
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="internal_sbc_ip" class="col-sm-7 control-label">SBC Internal IP</label>
+				<div class="col-sm-7">
+					<input type="internal_sbc_ip" class="form-control" id="internal_sbc_ip" value="10.240.104.">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="internal_sbc_port" class="col-sm-7 control-label">SBC Internal port</label>
+				<div class="col-sm-7">
+					<input type="internal_sbc_port" class="form-control" id="internal_sbc_port">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="acl_number" class="col-sm-7 control-label">ACL start number</label>
+				<div class="col-sm-7">
+					<input type="acl_number" class="form-control" id="acl_number">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-5 col-sm-7">
+					<div class="checkbox">
+						<label><input type="checkbox" name="short_acl" id="short_acl">ACL for SIP only</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="number" class="col-sm-7 control-label">Client number</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" id="clientNumber">
+				</div>
+			</div>
+
+			<!-- <div class="form-group">
+				<div class="col-sm-offset-5 col-sm-7">
+				<button class = "btn btn-info btn-sm" type="button" name="add_numbers" id="add_numbers">Add number</button>
+				</div>
+				</div>
+			-->
+			<div class="form-group">
+				<label for="sessions" class="col-sm-7 control-label">Session limit for incoming calls</label>
+				<div class="col-sm-7">
+					<input type="sessions_incoming" class="form-control" id="sessions_incoming">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-sm-offset-5 col-sm-7">
+					<div class="checkbox">
+						<label><input type="checkbox" name="outgoing_calls" id="outgoing_calls">Outgoing calls</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-group" style="display: none;" id="sessions_outgoing_div">
+				<label for="sessions" class="col-sm-7 control-label">Session limit for outgoing calls</label>
+				<div class="col-sm-7">
+					<input type="sessions_outgoing" class="form-control" id="sessions_outgoing">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="na_entry" class="col-sm-7 control-label">Last cac-policy entry</label>
+				<div class="col-sm-7">
+					<input type="cac_entry" class="form-control" id="cac_entry">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="rtg_entry" class="col-sm-7 control-label">Last routing entry</label>
+				<div class="col-sm-7">
+					<input type="rtg_entry" class="form-control" id="rtg_entry">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="na_entry" class="col-sm-7 control-label">Last number analize entry</label>
+				<div class="col-sm-7">
+					<input type="na_entry" class="form-control" id="na_entry">
+				</div>
+			</div>
+			<br>
+			<div class="form-group">
+				<div class="col-sm-offset-5 col-sm-7">
+					<button type="button" id="make_config_but" class="btn btn-danger">make config</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+
+	<div class="col">
+		<div class="col-md-10">
+			<div class="well" id="config_result" contentEditable="true">
+				... configuration
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--<script src="https://code.jquery.com/jquery-1.10.2.js"></script>-->
+
+
+{% endblock %}

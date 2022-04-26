@@ -1,0 +1,19 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+
+{% block content %}
+<main  class="container extra-bottom">
+<h1 align="center">Upload Excel SBC form</h1>
+</main>
+
+<form class="form-group" method="POST" enctype="multipart/form-data">
+    <br>
+
+    <div class="input-group mb-3">
+        <input type="file" class="form-control" name="xlsxFile" id="xlsxFile">
+         <button type="submit" class="btn btn-primary">Upload</button>
+    </div>
+
+
+</form>
+
+{% endblock %}
